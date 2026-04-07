@@ -102,3 +102,53 @@ func IsValidTaxResponsibility(code string) bool {
 	_, ok := TaxResponsibilities[TaxResponsibility(code)]
 	return ok
 }
+
+// INCRate represents INC (Impuesto Nacional al Consumo) tax rates.
+// Source: DIAN Caja de Herramientas - TarifaImpuestoINC-2.1.gc
+type INCRate string
+
+const (
+	INC2  INCRate = "2.00"  // Tarifa especial
+	INC4  INCRate = "4.00"  // Tarifa especial
+	INC8  INCRate = "8.00"  // Tarifa general
+	INC16 INCRate = "16.00" // Tarifa especial
+)
+
+var INCRates = map[INCRate]string{
+	INC2:  "Tarifa especial 2%",
+	INC4:  "Tarifa especial 4%",
+	INC8:  "Tarifa general 8%",
+	INC16: "Tarifa especial 16%",
+}
+
+// IsValidINCRate checks if an INC rate is valid.
+func IsValidINCRate(rate string) bool {
+	_, ok := INCRates[INCRate(rate)]
+	return ok
+}
+
+// WithholdingRate represents common withholding tax rates (ReteFuente).
+// Source: DIAN Caja de Herramientas - TarifaImpuestoReteFuente-2.1.gc
+// Note: This is a simplified list. Full list has 40+ specific rates by concept.
+var WithholdingRates = map[string]string{
+	"0.10":  "Compras de combustibles derivados del petróleo",
+	"0.50":  "Compras de café pergamino o cereza",
+	"1.00":  "Enajenación activos fijos / Compras vehículos / Transporte carga",
+	"1.50":  "Compras con tarjeta / Productos agrícolas sin procesar",
+	"2.00":  "Vigilancia y aseo / IPS / Construcción",
+	"2.50":  "Compras generales (declarantes) / Bienes raíces",
+	"3.00":  "Juegos de suerte y azar",
+	"3.50":  "Compras generales (no declarantes) / Software / Hoteles",
+	"4.00":  "Servicios generales (declarantes) / Arrendamiento muebles",
+	"6.00":  "Servicios generales (no declarantes)",
+	"7.00":  "Intereses o rendimientos financieros",
+	"10.00": "Honorarios y comisiones (no declarantes)",
+	"11.00": "Honorarios y comisiones (personas jurídicas)",
+	"20.00": "Loterías, rifas, apuestas y similares",
+}
+
+// IsValidWithholdingRate checks if a withholding rate is in the common list.
+func IsValidWithholdingRate(rate string) bool {
+	_, ok := WithholdingRates[rate]
+	return ok
+}

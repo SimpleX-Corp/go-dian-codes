@@ -109,3 +109,25 @@ func IsValidDebitNoteCorrection(code string) bool {
 	_, ok := DebitNoteCorrections[DebitNoteCorrection(code)]
 	return ok
 }
+
+// CreditNoteOperationType represents operation types for credit notes.
+// Source: DIAN Caja de Herramientas - TipoOperacionNC-2.1.gc
+type CreditNoteOperationType string
+
+const (
+	NCOpRefInvoice  CreditNoteOperationType = "20" // Nota Crédito que referencia una factura electrónica
+	NCOpNoRef       CreditNoteOperationType = "22" // Nota Crédito sin referencia a facturas
+	NCOpLegacyV1    CreditNoteOperationType = "23" // Nota Crédito para facturación electrónica V1 (Decreto 2242)
+)
+
+var CreditNoteOperationTypes = map[CreditNoteOperationType]string{
+	NCOpRefInvoice: "Nota Crédito que referencia una factura electrónica",
+	NCOpNoRef:      "Nota Crédito sin referencia a facturas",
+	NCOpLegacyV1:   "Nota Crédito para facturación electrónica V1 (Decreto 2242)",
+}
+
+// IsValidCreditNoteOperationType checks if a credit note operation type is valid.
+func IsValidCreditNoteOperationType(code string) bool {
+	_, ok := CreditNoteOperationTypes[CreditNoteOperationType(code)]
+	return ok
+}

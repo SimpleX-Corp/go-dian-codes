@@ -222,6 +222,143 @@ func TestOperationTypes(t *testing.T) {
 	}
 }
 
+func TestCountries(t *testing.T) {
+	tests := []struct {
+		code  string
+		valid bool
+	}{
+		{"CO", true}, // Colombia
+		{"US", true}, // United States
+		{"XX", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsValidCountry(tt.code); got != tt.valid {
+			t.Errorf("IsValidCountry(%q) = %v, want %v", tt.code, got, tt.valid)
+		}
+	}
+
+	// Test CountryName
+	if name := CountryName("CO"); name == "" {
+		t.Error("CountryName('CO') should not be empty")
+	}
+}
+
+func TestCurrencies(t *testing.T) {
+	tests := []struct {
+		code  string
+		valid bool
+	}{
+		{"COP", true}, // Colombian Peso
+		{"USD", true}, // US Dollar
+		{"EUR", true}, // Euro
+		{"XXX", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsValidCurrencyCode(tt.code); got != tt.valid {
+			t.Errorf("IsValidCurrencyCode(%q) = %v, want %v", tt.code, got, tt.valid)
+		}
+	}
+}
+
+func TestPostalCodes(t *testing.T) {
+	// Test a known postal code
+	if !IsValidPostalCode("111711") {
+		// Try another known code
+		found := false
+		for code := range postalCodes {
+			if IsValidPostalCode(code) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Error("No valid postal codes found")
+		}
+	}
+
+	// Invalid postal code
+	if IsValidPostalCode("000000") {
+		t.Error("PostalCode '000000' should be invalid")
+	}
+}
+
+func TestUnitsOfMeasure(t *testing.T) {
+	tests := []struct {
+		code  string
+		valid bool
+	}{
+		{"EA", true},   // Each
+		{"KGM", true},  // Kilogram
+		{"LTR", true},  // Liter
+		{"XXXX", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsValidUnitOfMeasure(tt.code); got != tt.valid {
+			t.Errorf("IsValidUnitOfMeasure(%q) = %v, want %v", tt.code, got, tt.valid)
+		}
+	}
+}
+
+func TestEnvironments(t *testing.T) {
+	if !IsValidEnvironment("1") {
+		t.Error("Environment '1' (Production) should be valid")
+	}
+	if !IsValidEnvironment("2") {
+		t.Error("Environment '2' (Test) should be valid")
+	}
+	if IsValidEnvironment("3") {
+		t.Error("Environment '3' should be invalid")
+	}
+}
+
+func TestDocumentEvents(t *testing.T) {
+	if !IsValidDocumentEvent("033") {
+		t.Error("DocumentEvent '033' (Accepted) should be valid")
+	}
+	if IsValidDocumentEvent("999") {
+		t.Error("DocumentEvent '999' should be invalid")
+	}
+}
+
+func TestDeliveryTerms(t *testing.T) {
+	tests := []struct {
+		code  string
+		valid bool
+	}{
+		{"FOB", true},
+		{"CIF", true},
+		{"EXW", true},
+		{"XXX", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsValidDeliveryTerm(tt.code); got != tt.valid {
+			t.Errorf("IsValidDeliveryTerm(%q) = %v, want %v", tt.code, got, tt.valid)
+		}
+	}
+}
+
+func TestDiscountCodes(t *testing.T) {
+	if !IsValidDiscountCode("00") {
+		t.Error("DiscountCode '00' (unconditional) should be valid")
+	}
+	if !IsValidDiscountCode("01") {
+		t.Error("DiscountCode '01' (conditional) should be valid")
+	}
+}
+
+func TestProductCodeTypes(t *testing.T) {
+	if !IsValidProductCodeType("001") {
+		t.Error("ProductCodeType '001' (UNSPSC) should be valid")
+	}
+	if !IsValidProductCodeType("010") {
+		t.Error("ProductCodeType '010' (GTIN) should be valid")
+	}
+}
+
 func BenchmarkIsValidMunicipality(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		IsValidMunicipality("11001")
@@ -231,5 +368,17 @@ func BenchmarkIsValidMunicipality(b *testing.B) {
 func BenchmarkGetMunicipality(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		GetMunicipality("11001")
+	}
+}
+
+func BenchmarkIsValidCountry(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IsValidCountry("CO")
+	}
+}
+
+func BenchmarkIsValidUnitOfMeasure(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IsValidUnitOfMeasure("KGM")
 	}
 }

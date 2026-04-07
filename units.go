@@ -57,23 +57,10 @@ func IsValidCommonUnit(code string) bool {
 	return ok
 }
 
-// CurrencyCode represents currency codes (ISO 4217).
-type CurrencyCode string
-
+// Common currency codes used in Colombian invoicing.
+// Full list available via IsValidCurrencyCode() in currencies_gen.go
 const (
-	CurrencyCOP CurrencyCode = "COP" // Colombian Peso
-	CurrencyUSD CurrencyCode = "USD" // US Dollar
-	CurrencyEUR CurrencyCode = "EUR" // Euro
+	CurrencyCOP = "COP" // Colombian Peso
+	CurrencyUSD = "USD" // US Dollar
+	CurrencyEUR = "EUR" // Euro
 )
-
-var Currencies = map[CurrencyCode]string{
-	CurrencyCOP: "Peso Colombiano",
-	CurrencyUSD: "Dólar Estadounidense",
-	CurrencyEUR: "Euro",
-}
-
-// IsValidCurrency checks if a currency code is valid.
-func IsValidCurrency(code string) bool {
-	_, ok := Currencies[CurrencyCode(code)]
-	return ok
-}
