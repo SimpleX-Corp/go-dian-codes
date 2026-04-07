@@ -249,10 +249,11 @@ func TestCurrencies(t *testing.T) {
 		code  string
 		valid bool
 	}{
-		{"COP", true}, // Colombian Peso
-		{"USD", true}, // US Dollar
-		{"EUR", true}, // Euro
-		{"XXX", false},
+		{"COP", true},  // Colombian Peso
+		{"USD", true},  // US Dollar
+		{"EUR", true},  // Euro
+		{"XXX", true},  // XXX is valid ISO 4217 (No currency)
+		{"ZZZ", false}, // Invalid
 	}
 
 	for _, tt := range tests {
