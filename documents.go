@@ -5,12 +5,14 @@ package codes
 type DocumentType string
 
 const (
-	DocInvoice         DocumentType = "01" // Factura electrónica de Venta
-	DocExportInvoice   DocumentType = "02" // Factura electrónica de venta con propósito de exportación
-	DocContingency     DocumentType = "03" // Factura de talonario o papel con numeración de contingencia
-	DocContingencyDIAN DocumentType = "04" // Factura electrónica de Venta por Contingencia DIAN
-	DocCreditNote      DocumentType = "91" // Nota Crédito
-	DocDebitNote       DocumentType = "92" // Nota Débito
+	DocInvoice         DocumentType = "01"  // Factura electrónica de Venta
+	DocExportInvoice   DocumentType = "02"  // Factura electrónica de venta con propósito de exportación
+	DocContingency     DocumentType = "03"  // Factura de talonario o papel con numeración de contingencia
+	DocContingencyDIAN DocumentType = "04"  // Factura electrónica de Venta por Contingencia DIAN
+	DocSupportDoc      DocumentType = "05"  // Documento Soporte en adquisiciones con no obligados a facturar
+	DocCreditNote      DocumentType = "91"  // Nota Crédito
+	DocDebitNote       DocumentType = "92"  // Nota Débito
+	DocPayroll         DocumentType = "102" // Nómina Electrónica Individual
 )
 
 // DocumentTypes maps codes to descriptions.
@@ -19,8 +21,10 @@ var DocumentTypes = map[DocumentType]string{
 	DocExportInvoice:   "Factura electrónica de venta con propósito de exportación",
 	DocContingency:     "Factura de talonario o papel con numeración de contingencia",
 	DocContingencyDIAN: "Factura electrónica de Venta por Contingencia DIAN",
+	DocSupportDoc:      "Documento Soporte en adquisiciones con no obligados a facturar",
 	DocCreditNote:      "Nota Crédito",
 	DocDebitNote:       "Nota Débito",
+	DocPayroll:         "Nómina Electrónica Individual",
 }
 
 // IsValidDocumentType checks if a document type code is valid.
